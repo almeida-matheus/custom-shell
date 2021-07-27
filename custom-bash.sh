@@ -31,7 +31,6 @@ then
     echo -e "default shell of user $USER is zsh"
     echo -n "do you wanna change your default shell to bash? [y/N]: "
     read change;
-    # echo ""
     if [ "$change" == "y" ] || [ "$change" == "Y" ] || [ "$change" == "" ]; then
         echo -e "so now you must enter the username and then enter your password"
         chsh -s /bin/bash
@@ -39,7 +38,8 @@ then
         echo "if you wanna change to zsh please enter ' chsh -s /bin/zsh ' in the terminal"
         return
     fi
-    echo -e "your default shell is zsh"
+    echo ""
+    echo -e "default shell of user $USER is zsh"
     echo "if you wanna change to bash please enter ' chsh -s /bin/bash ' in the terminal"
 else
     echo ""
@@ -76,14 +76,6 @@ alias grep="grep --color=always"
 # enable lscolor
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
-# customize man
-export LESS_TERMCAP_mb=$"\e[1;32m" 
-export LESS_TERMCAP_md=$"\e[1;32m" 
-export LESS_TERMCAP_me=$"\e[0m" 
-export LESS_TERMCAP_se=$"\e[0m"  
-export LESS_TERMCAP_so=$"\e[01;33m" 
-export LESS_TERMCAP_ue=$"\e[0m" 
-export LESS_TERMCAP_us=$"\e[1;4;31m"
 # customize history
 export HISTTIMEFORMAT="%d/%m/%y %T " 
 # dont put duplicate lines or lines starting with space in the history.
@@ -124,14 +116,6 @@ alias diff="diff --color=auto"
 # enable lscolor
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
-# customize man
-export LESS_TERMCAP_mb=$"\e[1;32m" 
-export LESS_TERMCAP_md=$"\e[1;32m" 
-export LESS_TERMCAP_me=$"\e[0m" 
-export LESS_TERMCAP_se=$"\e[0m"  
-export LESS_TERMCAP_so=$"\e[01;33m" 
-export LESS_TERMCAP_ue=$"\e[0m" 
-export LESS_TERMCAP_us=$"\e[1;4;31m"
 # customize history
 export HISTTIMEFORMAT="%d/%m/%y %T " 
 # dont put duplicate lines or lines starting with space in the history.
