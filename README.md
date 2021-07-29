@@ -1,8 +1,7 @@
 <h1 align="center">CUSTOM SHELL</h1>
 
 <p align="center">
-    <a href="#about-the-project">About the project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-    <a href="#how-to-use">Models</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#about">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
     <a href="#installation">Installation</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
     <a href="#contributing">Contributing</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
     <a href="#license">License</a>
@@ -10,47 +9,27 @@
 
 <br>
 
-## About the project
-Customize your shell `BASH && ZSH` in your unix environment
+## About
+Customize your shell `BASH` in your unix environment
 
-<!-- <img src="./assets/custom-bash.gif" alt="custom-bash">
- -->
-### Functionalities
-- Dynamic appearance 
-- Show git branch
-- Ignore case sensitive
-- Man colorful
-- Alias useful
-- Custom history
-
-<!-- USAGE -->
-## Models
-
-#### 1 - Bash
-
-#### 1 - Zsh
+<img src="./assets/bash.png" alt="bash">
 
 <!-- INSTALATION -->
 ## Installation
 
 #### 1. Clone git repository
 ```
-git clone "https://github.com/almeida-matheus/custom-bash"
+git clone "https://github.com/almeida-matheus/custom-shell"
 ```
 
 #### 2. Add permission to execute
 ```
 cd custom-shell/
 chmod +x custom-bash.sh
-chmod +x custom-zsh.sh
 ```
 #### 3. Execute the script
 ```
 ./custom-bash.sh
-```
-or
-```
-./custom-zsh.sh
 ```
 
 <!-- CONTRIBUTING -->

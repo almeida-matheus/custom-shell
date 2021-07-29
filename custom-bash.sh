@@ -32,9 +32,9 @@ then
     echo -n "do you wanna change your default shell to bash? [y/N]: "
     read change;
     if [ "$change" == "y" ] || [ "$change" == "Y" ] || [ "$change" == "" ]; then
-        echo -e "so now you must enter the username and then enter your password"
+        echo ""
         chsh -s /bin/bash
-        echo -e "now your default shell is bash"
+        echo -e "default shell of user $USER is bash"
         echo "if you wanna change to zsh please enter ' chsh -s /bin/zsh ' in the terminal"
         return
     fi
@@ -84,17 +84,6 @@ HISTCONTROL=ignoreboth
 }
 
 ApplyCustomLinux() {
-echo '
-# mac8028 customize prompt
-show_branch() {
-    git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/─[\1]/"
-}
-if [ $(id -u) == 0 ]; then
-    export PS1="\[$(tput sgr0)\]┌─\[$(tput bold)\](\u@\h)\[$(tput sgr0)\]─\[$(tput bold)\][\w]\$(show_branch) \[$(tput sgr0)\]\n└─\[$(tput sgr0)\]\[$(tput bold)\]\[\033[91m\]\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
-else
-    export PS1="\[$(tput sgr0)\]┌─\[$(tput bold)\](\u@\h)\[$(tput sgr0)\]─\[$(tput bold)\][\w]\$(show_branch) \[$(tput sgr0)\]\n└─\[$(tput sgr0)\]\[$(tput bold)\]\[\033[92m\]\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
-fi
-' >> ~/.bash_profile
 echo ' 
 # mac8028 customize prompt
 show_branch() { 
@@ -105,8 +94,6 @@ if [ $(id -u) == 0 ]; then
 else
     export PS1="┌──\[$(tput bold)\](\u@\h)\[$(tput sgr0)\]─\[$(tput bold)\][\w]\[$(tput sgr0)\$(__git_ps1 "─[%s]") \[$(tput sgr0)\]\n└─\[$(tput sgr0)\]\[$(tput bold)\]\[\033[92m\]\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
 fi
-' >> ~/.bashrc
-echo '
 # ignore case
 set completion-ignore-case On
 # alias useful
@@ -128,7 +115,7 @@ if ! shopt -oq posix; then
         . /etc/bash_completion
     fi
 fi
-' | tee -a ~/.bash_profile ~/.bashrc > /dev/null
+' >> ~/.bashrc
 }
 
 if [[ $OSTYPE == "linux-gnu" ]]; then
@@ -147,3 +134,4 @@ source ~/.bash_profile
 source ~/.bashrc
 
 echo "modifications successfully performed, restart the terminal to apply the modifications"
+echo ""
