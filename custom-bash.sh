@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
 PrepareRun() {
-cat $1 | grep mac8028 > /dev/null 2>&1
+cat $1 | grep custom-bash > /dev/null 2>&1
 if [ $? == 0 ]; then
-    echo ""
-    echo "bash customization has already been applied to user $USER"
+    echo -e "\nbash customization has already been applied to user $USER"
     echo -n "do you wanna reset your bash? [y/N]: "
     read reset;
-    echo ""
     if ! { [ "$reset" == "y" ] || [ "$reset" == "Y" ]; }; then
         exit 1
     fi
@@ -21,35 +19,30 @@ else
     if [ ! -f ~/.bash_profile ]; then
         touch ~/.bash_profile
     fi
+    if [ ! -a ~/.inputrc ]; then echo '$include /etc/inputrc' > ~/.inputrc; fi
     cp ~/.bash_profile ~/.bash_profile.bkp && cp ~/.bashrc ~/.bashrc.bkp
 fi
 }
 
 DefaultShell() {
-if [ $SHELL != "/bin/bash" ]
-then
-    echo -e "default shell of user $USER is zsh"
+if [ $SHELL != "/bin/bash" ]; then
+    echo -e "\ndefault shell of user $USER is zsh"
     echo -n "do you wanna change your default shell to bash? [y/N]: "
     read change;
     if [ "$change" == "y" ] || [ "$change" == "Y" ] || [ "$change" == "" ]; then
-        echo ""
         chsh -s /bin/bash
-        echo -e "default shell of user $USER is bash"
-        echo "if you wanna change to zsh please enter ' chsh -s /bin/zsh ' in the terminal"
+        echo -e "\ndefault shell of user $USER is bash"
         return
     fi
-    echo ""
-    echo -e "default shell of user $USER is zsh"
-    echo "if you wanna change to bash please enter ' chsh -s /bin/bash ' in the terminal"
+    echo -e "\ndefault shell of user $USER is zsh"
 else
-    echo ""
-    echo -e "default shell of user $USER is bash"
+    echo -e "\ndefault shell of user $USER is bash"
 fi
 }
 
 ApplyCustomMac() {
 echo '
-# mac8028 customize prompt
+# custom-bash :)
 show_branch() {
     git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/─[\1]/"
 }
@@ -60,62 +53,44 @@ else
 fi
 ' >> ~/.bash_profile
 echo '
-# mac8028 customize prompt
+# custom-bash :)
 show_branch() {
     git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/─[\1]/"
 }
 export PS1="\[$(tput sgr0)\]┌─\[$(tput bold)\](\u@\h)\[$(tput sgr0)\]─\[$(tput bold)\][\w]\$(show_branch) \[$(tput sgr0)\]\n└─\[$(tput sgr0)\]\[$(tput bold)\]\[\033[93m\]\$\[$(tput sgr0)\] \[$(tput sgr0)\]" 
 ' >> ~/.bashrc
 echo '
-# ignore case
 set completion-ignore-case On
-# alias useful
 alias ls="ls -G"
-alias ll="ls -lhaCF" 
+alias ll="ls -lhaC" 
 alias grep="grep --color=always"
-# enable lscolor
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
-# customize history
 export HISTTIMEFORMAT="%d/%m/%y %T " 
-# dont put duplicate lines or lines starting with space in the history.
-HISTCONTROL=ignoreboth
 ' | tee -a ~/.bash_profile ~/.bashrc > /dev/null
+echo 'set completion-ignore-case On' >> ~/.inputrc
 }
-
 ApplyCustomLinux() {
 echo ' 
-# mac8028 customize prompt
-show_branch() { 
-    git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/─[\1]/"
+# custom-bash :)
+show_branch() {
+    git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/ [\1]/"
 }
 if [ $(id -u) == 0 ]; then
-    export PS1="┌──\[$(tput bold)\](\u@\h)\[$(tput sgr0)\]─\[$(tput bold)\][\w]\[$(tput sgr0)\$(__git_ps1 "─[%s]") \[$(tput sgr0)\]\n└─\[$(tput sgr0)\]\[$(tput bold)\]\[\033[91m\]\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
+    export PS1="\[$(tput sgr0)\]┌─\[$(tput bold)\](\u@\h)\[$(tput sgr0)\]─\[$(tput bold)\][\w]\$(show_branch) \[$(tput sgr0)\]\n└─\[$(tput sgr0)\]\[$(tput bold)\]\[\033[91m\]\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
 else
-    export PS1="┌──\[$(tput bold)\](\u@\h)\[$(tput sgr0)\]─\[$(tput bold)\][\w]\[$(tput sgr0)\$(__git_ps1 "─[%s]") \[$(tput sgr0)\]\n└─\[$(tput sgr0)\]\[$(tput bold)\]\[\033[92m\]\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
+    export PS1="\[$(tput sgr0)\]┌─\[$(tput bold)\](\u@\h)\[$(tput sgr0)\]─\[$(tput bold)\][\w]\$(show_branch) \[$(tput sgr0)\]\n└─\[$(tput sgr0)\]\[$(tput bold)\]\[\033[92m\]\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
 fi
-# ignore case
 set completion-ignore-case On
-# alias useful
-alias ls="ls --color=auto" 
+alias ls="ls --color=auto"
+alias ll="ls -lhaC" 
 alias grep="grep --color=auto" 
 alias diff="diff --color=auto"
-# enable lscolor
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
-# customize history
-export HISTTIMEFORMAT="%d/%m/%y %T " 
-# dont put duplicate lines or lines starting with space in the history.
-HISTCONTROL=ignoreboth
-# enable programmable completion features
-if ! shopt -oq posix; then
-    if [ -f /usr/share/bash-completion/bash_completion ]; then
-        . /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]; then
-        . /etc/bash_completion
-    fi
-fi
+export HISTTIMEFORMAT="%d/%m/%y %T "
 ' >> ~/.bashrc
+echo 'set completion-ignore-case On' >> ~/.inputrc
 }
 
 if [[ $OSTYPE == "linux-gnu" ]]; then
@@ -133,5 +108,4 @@ fi
 source ~/.bash_profile
 source ~/.bashrc
 
-echo "modifications successfully performed, restart the terminal to apply the modifications"
-echo ""
+echo -e "please restart the terminal to apply the modifications\n"
