@@ -28,6 +28,9 @@ if [ $SHELL != "/bin/bash" ]; then
     read change;
     if [ "$change" == "y" ] || [ "$change" == "Y" ] || [ "$change" == "" ]; then
         chsh -s /bin/bash
+        while [ $? -ne 0 ]; do
+            chsh -s /bin/bash
+        done
         return
     fi
 fi
@@ -52,7 +55,11 @@ show_branch() {
     local gbranch=$(git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/[\1]/")
     if [ "$gbranch" != "" ]; then echo "─$(tput bold)$gbranch"; fi
 }
-export PS1="\[$(tput sgr0)\]┌─\[$(tput bold)\](\u@\h)\[$(tput sgr0)\]─\[$(tput bold)\][\w]\[$(tput sgr0)\]\$(show_branch)\[$(tput sgr0)\]\n└─\[$(tput sgr0)\]\[$(tput bold)\]\[\033[93m\]\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
+show_profile() {
+    local gprofile=$(echo $AWS_VAULT)
+    if [ "$gprofile" != "" ]; then echo "─$(tput bold)[$gprofile]"; fi
+}
+export PS1="\[$(tput sgr0)\]┌─\[$(tput bold)\](\u@\h)\[$(tput sgr0)\]─\[$(tput bold)\][\w]\[$(tput sgr0)\]\$(show_branch)\$(show_profile)\[$(tput sgr0)\]\n└─\[$(tput sgr0)\]\[$(tput bold)\]\[\033[93m\]\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
 ' >> ~/.bashrc
 echo '
 set completion-ignore-case On
