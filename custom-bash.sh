@@ -68,7 +68,8 @@ alias ll="ls -lhaC"
 alias grep="grep --color=always"
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
-export HISTTIMEFORMAT="%d/%m/%y %T " 
+export HISTTIMEFORMAT="%d/%m/%y %T 
+export BASH_SILENCE_DEPRECATION_WARNING=1" 
 ' | tee -a ~/.bash_profile ~/.bashrc > /dev/null
 echo 'set completion-ignore-case On' >> ~/.inputrc
 }

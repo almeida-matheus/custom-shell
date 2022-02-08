@@ -13,10 +13,17 @@
 Customize your shell `BASH` in your unix environment
 
 <img src="./assets/bash.png" alt="bash">
+</br>
+<img src="./assets/custom-bash.png" alt="custom-bash" width="440px">
 
-<!-- INSTALATION -->
 ## Installation
 
+#### 1. Direct installation
+```
+curl -s https://raw.githubusercontent.com/almeida-matheus/custom-shell/master/custom-bash.sh | bash
+```
+
+or
 #### 1. Clone git repository
 ```
 git clone "https://github.com/almeida-matheus/custom-shell"
@@ -32,7 +39,6 @@ chmod +x custom-bash.sh
 ./custom-bash.sh
 ```
 
-<!-- CONTRIBUTING -->
 ## Contributing
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b branch-name`)
@@ -41,6 +47,5 @@ chmod +x custom-bash.sh
 5. Push to the Branch (`git push origin branch-name`)
 6. Open a Pull Request
 
-<!-- LICENSE -->
 ## License
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
